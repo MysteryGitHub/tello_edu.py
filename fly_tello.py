@@ -19,7 +19,7 @@ class FlyTello:
     # CLASS INITIALISATION AND CONTEXT HANDLER
     #
 
-    def __init__(self, tello_sn_list: list, get_status=False, first_ip: int=1, last_ip: int=254):
+    def __init__(self, tello_sn_list: list, get_status=False, first_ip: int = 1, last_ip: int = 254):
         """ Initiate FlyTello, starting up CommsManager, finding and initialising our Tellos, and reporting battery.
 
             :param tello_sn_list: List of serial numbers, in the order we want to number the Tellos.
@@ -56,55 +56,55 @@ class FlyTello:
     #   Note sync is ignored (i.e. False) if tello_num is 'All', or if is called within a sync_these 'with' block.
     #
 
-    def takeoff(self, tello: Union[int, str]='All', sync: bool=True) -> None:
+    def takeoff(self, tello: Union[int, str] = 'All', sync: bool = True) -> None:
         """ Auto takeoff, ascends to ~50cm above the floor. """
         self._command('takeoff', 'Control', tello, sync)
 
-    def land(self, tello: Union[int, str]='All', sync: bool=True) -> None:
+    def land(self, tello: Union[int, str] = 'All', sync: bool = True) -> None:
         """ Auto landing """
         self._command('land', 'Control', tello, sync)
 
-    def stop(self, tello: Union[int, str]='All') -> None:
+    def stop(self, tello: Union[int, str] = 'All') -> None:
         """ Stop Tello wherever it is, even if mid-manoeuvre. """
         self._command('stop', 'Control', tello, sync=False)
 
-    def emergency(self, tello: Union[int, str]='All') -> None:
+    def emergency(self, tello: Union[int, str] = 'All') -> None:
         """ Immediately kill power to the Tello's motors. """
         self._command('emergency', 'Control', tello, sync=False)
 
-    def up(self, dist: int, tello: Union[int, str]='All', sync: bool=True) -> None:
+    def up(self, dist: int, tello: Union[int, str] = 'All', sync: bool = True) -> None:
         """ Move up by dist (in cm) """
         self._command_with_value('up', 'Control', dist, 20, 500, 'cm', tello, sync)
 
-    def down(self, dist: int, tello: Union[int, str]='All', sync: bool=True) -> None:
+    def down(self, dist: int, tello: Union[int, str] = 'All', sync: bool = True) -> None:
         """ Move down by dist (in cm) """
         self._command_with_value('down', 'Control', dist, 20, 500, 'cm', tello, sync)
 
-    def left(self, dist: int, tello: Union[int, str]='All', sync: bool=True) -> None:
+    def left(self, dist: int, tello: Union[int, str] = 'All', sync: bool = True) -> None:
         """ Move left by dist (in cm) """
         self._command_with_value('left', 'Control', dist, 20, 500, 'cm', tello, sync)
 
-    def right(self, dist: int, tello: Union[int, str]='All', sync: bool=True) -> None:
+    def right(self, dist: int, tello: Union[int, str] = 'All', sync: bool = True) -> None:
         """ Move right by dist (in cm) """
         self._command_with_value('right', 'Control', dist, 20, 500, 'cm', tello, sync)
 
-    def forward(self, dist: int, tello: Union[int, str]='All', sync: bool=True) -> None:
+    def forward(self, dist: int, tello: Union[int, str] = 'All', sync: bool = True) -> None:
         """ Move forward by dist (in cm) """
         self._command_with_value('forward', 'Control', dist, 20, 500, 'cm', tello, sync)
 
-    def back(self, dist: int, tello: Union[int, str]='All', sync: bool=True) -> None:
+    def back(self, dist: int, tello: Union[int, str] = 'All', sync: bool = True) -> None:
         """ Move back by dist (in cm) """
         self._command_with_value('back', 'Control', dist, 20, 500, 'cm', tello, sync)
 
-    def rotate_cw(self, angle: int, tello: Union[int, str]='All', sync: bool=True) -> None:
+    def rotate_cw(self, angle: int, tello: Union[int, str] = 'All', sync: bool = True) -> None:
         """ Rotate clockwise (turn right) by angle (in degrees) """
         self._command_with_value('cw', 'Control', angle, 1, 360, 'degrees', tello, sync)
 
-    def rotate_ccw(self, angle: int, tello: Union[int, str]='All', sync: bool=True) -> None:
+    def rotate_ccw(self, angle: int, tello: Union[int, str] = 'All', sync: bool = True) -> None:
         """ Rotate anti-clockwise (turn left) by angle (in degrees) """
         self._command_with_value('ccw', 'Control', angle, 1, 360, 'degrees', tello, sync)
 
-    def flip(self, direction: str, tello: Union[int, str]='All', sync: bool=True) -> None:
+    def flip(self, direction: str, tello: Union[int, str] = 'All', sync: bool = True) -> None:
         """ Perform a flip in the specified direction (left/right/forward/back) - will jump ~30cm in that direction.
 
             Note that Tello is unable to flip if battery is less than 50%!
@@ -115,7 +115,7 @@ class FlyTello:
         dir_dict = {'left': 'l', 'right': 'r', 'forward': 'f', 'back': 'b'}
         self._command_with_options('flip', 'Control', dir_dict[direction], ['l', 'r', 'f', 'b'], tello, sync)
 
-    def straight(self, x: int, y: int, z: int, speed: int, tello: Union[int, str]='All', sync: bool=True) -> None:
+    def straight(self, x: int, y: int, z: int, speed: int, tello: Union[int, str] = 'All', sync: bool = True) -> None:
         """ Fly straight to the coordinates specified, relative to the current position.
 
             :param x: x offset (+ forward, - back) in cm
@@ -133,7 +133,7 @@ class FlyTello:
                             opt_params=[], tello_num=tello, sync=sync)
 
     def curve(self, x1: int, y1: int, z1: int, x2: int, y2: int, z2: int, speed: int,
-              tello: Union[int, str]='All', sync: bool=True) -> None:
+              tello: Union[int, str] = 'All', sync: bool = True) -> None:
         """ Fly a curve from current position, passing through mid point on way to end point (relative to current pos).
 
             The curve will be defined as an arc which passes through the three points (current, mid and end).  The arc
@@ -163,7 +163,7 @@ class FlyTello:
                             opt_params=[], tello_num=tello, sync=sync)
 
     def straight_from_pad(self, x: int, y: int, z: int, speed: int, pad: str,
-                          tello: Union[int, str]='All', sync: bool=True) -> None:
+                          tello: Union[int, str] = 'All', sync: bool = True) -> None:
         """ Fly straight to the coordinates specified, relative to the orientation of the mission pad.
 
             If the mission pad cannot be found, the Tello will not move, except to go to the height (z) above the pad.
@@ -189,7 +189,7 @@ class FlyTello:
                             tello_num=tello, sync=sync)
 
     def curve_from_pad(self, x1: int, y1: int, z1: int, x2: int, y2: int, z2: int, speed: int, pad: str,
-                       tello: Union[int, str]='All', sync: bool=True) -> None:
+                       tello: Union[int, str] = 'All', sync: bool = True) -> None:
         """ Fly a curve from current position, passing through mid point on way to end point (relative to mission pad).
 
             If the mission pad cannot be found, the Tello will not move, except to go to the height (z) above the pad.
@@ -224,7 +224,7 @@ class FlyTello:
                             tello_num=tello, sync=sync)
 
     def jump_between_pads(self, x: int, y: int, z: int, speed: int, yaw: int, pad1: str, pad2: str,
-                          tello: Union[int, str]='All', sync: bool=True) -> None:
+                          tello: Union[int, str] = 'All', sync: bool = True) -> None:
         """ Fly straight from pad1 to the coordinates specified (relative to pad1), then find pad2 at the end point.
 
             If the first mission pad cannot be found, the Tello will not move, except to go to the height (z) above the
@@ -257,12 +257,12 @@ class FlyTello:
     # TELLO SDK V2.0 COMMANDS: SET
     #
 
-    def set_speed(self, speed: int, tello: Union[int, str]='All', sync: bool=False) -> None:
+    def set_speed(self, speed: int, tello: Union[int, str] = 'All', sync: bool = False) -> None:
         """ Set 'normal' max speed for the Tello, for e.g. 'forward', 'back', etc commands. """
         self._command_with_value('speed', 'Set', speed, 10, 100, 'cm/s', tello, sync)
 
     def set_rc(self, left_right: int, forward_back: int, up_down: int, yaw: int,
-               tello: Union[int, str]='All', sync: bool=False) -> None:
+               tello: Union[int, str] = 'All', sync: bool = False) -> None:
         """ Simulate remote controller commands, with range of -100 to +100 on each axis. """
         self._control_multi(command='rc',
                             val_params=[(left_right, -100, 100, 'left_right'),
@@ -271,19 +271,19 @@ class FlyTello:
                                         (yaw, -100, 100, 'yaw')],
                             opt_params=[], tello_num=tello, sync=sync)
 
-    def set_own_wifi(self, ssid: str, password: str, tello: int, sync: bool=False) -> None:
+    def set_own_wifi(self, ssid: str, password: str, tello: int, sync: bool = False) -> None:
         """ Set the Tello's own WiFi built-in hotspot to use the specified name (ssid) and password. """
         self._command('wifi %s %s' % (ssid, password), 'Set', tello, sync)
 
-    def pad_detection_on(self, tello: Union[int, str]='All', sync: bool=False) -> None:
+    def pad_detection_on(self, tello: Union[int, str] = 'All', sync: bool = False) -> None:
         """ Turn on mission pad detection - must be set before setting direction or using pads.  """
         self._command('mon', 'Set', tello, sync)
 
-    def pad_detection_off(self, tello: Union[int, str]='All', sync: bool=False) -> None:
+    def pad_detection_off(self, tello: Union[int, str] = 'All', sync: bool = False) -> None:
         """ Turn off mission pad detection - commands using mid will not work if this is off. """
         self._command('moff', 'Set', tello, sync)
 
-    def set_pad_detection(self, direction: str, tello: Union[int, str]='All', sync: bool=False) -> None:
+    def set_pad_detection(self, direction: str, tello: Union[int, str] = 'All', sync: bool = False) -> None:
         """ Set the direction of mission pad detection.  Must be done before mission pads are used.
 
             :param direction: Either 'downward', 'forward', or 'both'.
@@ -294,7 +294,7 @@ class FlyTello:
         dir_dict = {'downward': 0, 'forward': 1, 'both': 2}
         self._command_with_options('mdirection', 'Set', dir_dict[direction], [0, 1, 2], tello, sync)
 
-    def set_ap_wifi(self, ssid: str, password: str, tello: Union[int, str]='All', sync: bool=False) -> None:
+    def set_ap_wifi(self, ssid: str, password: str, tello: Union[int, str] = 'All', sync: bool = False) -> None:
         """ Tell the Tello to connect to an existing WiFi network using the supplied ssid and password. """
         self._command('ap %s %s' % (ssid, password), 'Set', tello, sync)
 
@@ -304,27 +304,27 @@ class FlyTello:
     # Note arguments are common: tello can be an individual or 'All'; sync=True will wait until all are ready.
     #
 
-    def get_speed(self, tello: Union[str, int]='All', sync: bool=False) -> None:
+    def get_speed(self, tello: Union[str, int] = 'All', sync: bool = False) -> None:
         """ Reads the speed setting of the Tello(s), in range 10-100.  Reflects max speed, not actual current speed. """
         self._command('speed?', 'Read', tello, sync)
 
-    def get_battery(self, tello: Union[str, int]='All', sync: bool=False) -> None:
+    def get_battery(self, tello: Union[str, int] = 'All', sync: bool = False) -> None:
         """ Read the battery level of the Tello(s) """
         self._command('battery?', 'Read', tello, sync)
 
-    def get_time(self, tello: Union[str, int]='All', sync: bool=False) -> None:
+    def get_time(self, tello: Union[str, int] = 'All', sync: bool = False) -> None:
         """ Should get current flight time of the Tello(s) """
         self._command('time?', 'Read', tello, sync)
 
-    def get_wifi(self, tello: Union[str, int]='All', sync: bool=False) -> None:
+    def get_wifi(self, tello: Union[str, int] = 'All', sync: bool = False) -> None:
         """ Should get WiFi signal-to-noise ratio (SNR) - doesn't appear very reliable """
         self._command('wifi?', 'Read', tello, sync)
 
-    def get_sdk(self, tello: Union[str, int]='All', sync: bool=False) -> None:
+    def get_sdk(self, tello: Union[str, int] = 'All', sync: bool = False) -> None:
         """ Read the SDK version of the Tello(s) """
         self._command('sdk?', 'Read', tello, sync)
 
-    def get_sn(self, tello: Union[str, int]='All', sync: bool=False) -> None:
+    def get_sn(self, tello: Union[str, int] = 'All', sync: bool = False) -> None:
         """ Read the Serial Number of the Tello(s) """
         self._command('sn?', 'Read', tello, sync)
 
@@ -332,7 +332,7 @@ class FlyTello:
     # TELLO SDK V2.0 EXTENDED & COMPOSITE COMMANDS
     #
 
-    def reorient(self, height: int, pad: str, tello: Union[str, int]='All', sync: bool=False) -> None:
+    def reorient(self, height: int, pad: str, tello: Union[str, int] = 'All', sync: bool = False) -> None:
         """ Shortcut method to re-centre the Tello on the specified pad, helping maintain accurate positioning.
 
             Whilst the Tello has fairly good positioning stability by default, they can drift after flying for some
@@ -513,11 +513,28 @@ class FlyTello:
         """
         self.tello_mgr.get_tello(tello).flight_complete = True
 
+    @staticmethod
+    def read_serial_numbers_from_file(file='serial_numbers.txt') -> list:
+        """ Get the list of all Tello serials numbers from the given file.
+        Blank lines and lines that start with "#" will be skipped, so you can add labels/notes about which drone is which
+
+        :param file: The file containing the list of serial numbers; default: 'serial_numbers.txt'
+        """
+        serials = list()
+        with open(file, 'r') as serial_numbers:
+            for serial_number in serial_numbers:
+                # Strip all whitespace first, then make sure the line is not blank or a comment
+                serial_number = "".join(serial_number.split())
+                if serial_number == '' or serial_number[0] == '#':
+                    continue
+                serials.append(serial_number)
+        return serials
+
     #
     # STATUS MESSAGE PROCESSING
     #
 
-    def print_status(self, tello: Union[int, str]='All', sync: bool=False) -> None:
+    def print_status(self, tello: Union[int, str] = 'All', sync: bool = False) -> None:
         """ Print the entire Status Message to the Python Console, for the specified Tello(s). """
         if sync and not self.in_sync_these:
             self.tello_mgr.wait_sync()
@@ -528,7 +545,7 @@ class FlyTello:
             tello = self.tello_mgr.get_tello(num=tello)
             print('Tello %d Status: %s' % (tello.num, tello.status))
 
-    def get_status(self, key: str, tello: int, sync: bool=False) -> Optional[str]:
+    def get_status(self, key: str, tello: int, sync: bool = False) -> Optional[str]:
         """ Return the value of a specific key from an individual Tello  """
         if sync and not self.in_sync_these:
             self.tello_mgr.wait_sync()
