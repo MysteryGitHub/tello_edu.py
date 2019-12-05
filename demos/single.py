@@ -12,6 +12,8 @@ from fly_tello import FlyTello
 
 # Read all serial numbers from a serial_numbers.txt file
 tello_sn_list = FlyTello.read_serial_numbers_from_file()
+# Since this is a single Tello demo, we only need one Tello SN
+tello_sn_list = [tello_sn_list[0]]
 # Control the flight
 with FlyTello(tello_sn_list) as fly:
     fly.takeoff()
