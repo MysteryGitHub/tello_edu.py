@@ -57,7 +57,6 @@ def send_command(command, possible_addr, control_socket, control_port):
 
 
 def initialise(first_ip, last_ip, control_port, possible_addr):
-
     # Create socket for communication with Tello
     control_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # socket for sending cmd
     control_socket.bind(('', control_port))

@@ -1,7 +1,5 @@
 from fly_tello import FlyTello
 
-my_tellos = list()
-
 #
 # SIMPLE EXAMPLE - MOST BASIC FLIGHT TO SHOW STATUS MESSAGES
 #
