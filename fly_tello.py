@@ -295,7 +295,7 @@ class FlyTello:
         self._command_with_options('mdirection', 'Set', dir_dict[direction], [0, 1, 2], tello, sync)
 
     def set_ap_wifi(self, ssid: str, password: str, tello: Union[int, str] = 'All', sync: bool = False) -> None:
-        """ Tell the Tello to connect to an existing WiFi network using the supplied ssid and password. """
+        """ Tell the Tello to connect to an existing WiFi network using the supplied SSID and password. """
         self._command('ap %s %s' % (ssid, password), 'Set', tello, sync)
 
     #
