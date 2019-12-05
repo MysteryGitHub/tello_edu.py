@@ -1,6 +1,4 @@
 from fly_tello import FlyTello
-my_tellos = list()
-
 
 #
 # SIMPLE EXAMPLE - SINGLE TELLO WITH MISSION PAD
@@ -12,14 +10,10 @@ my_tellos = list()
 # MAIN FLIGHT CONTROL LOGIC
 #
 
-# Define the Tello's we're using, in the order we want them numbered
-my_tellos.append('0TQDFC6EDBBX03')  # 1-Yellow
-# my_tellos.append('0TQDFC6EDB4398')  # 2-Blue
-# my_tellos.append('0TQDFC6EDBH8M8')  # 3-Green
-# my_tellos.append('0TQDFC7EDB4874')  # 4-Red
-
+# Read all serial numbers from a serial_numbers.txt file
+tello_sn_list = FlyTello.read_serial_numbers_from_file()
 # Control the flight
-with FlyTello(my_tellos) as fly:
+with FlyTello(tello_sn_list) as fly:
     fly.takeoff()
     fly.forward(dist=50)
     fly.back(dist=50)
