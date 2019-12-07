@@ -7,6 +7,7 @@ from tello import Tello
 
 
 class CommsManager:
+    """ Handles all communication with the Tello drones. """
 
     #
     # CLASS INIT & SETUP
@@ -197,7 +198,11 @@ class CommsManager:
             # Get IPv4 info
             ip_info = addrs[socket.AF_INET][0]
             address = ip_info['addr']
-            netmask = ip_info['netmask']
+            # Get the netmask, and skip network interfaces that don't have one
+            if 'netmask' in ip_info:
+                netmask = ip_info['netmask']
+            else:
+                continue
 
             # Avoid searching when on very large subnets
             if netmask != '255.255.255.0':
